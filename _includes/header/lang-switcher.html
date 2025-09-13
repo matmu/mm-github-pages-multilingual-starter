@@ -1,0 +1,13 @@
+<nav aria-label="Language switch">
+  {% for lang in site.languages %}
+    {% assign meta  = site.data.lang[lang] %}
+    {% assign name  = meta.name %}
+    {% assign icon  = meta.icon %}
+
+    {% if lang == site.default_lang %}
+      <a href=" {{ include.page_url }}" hreflang="{{ lang }}" title="{{ name }}">{{ icon }}</a>
+    {% else %}
+      <a href="/{{ lang }}{{ include.page_url }}" hreflang="{{ lang }}" title="{{ name }}">{{ icon }}</a>
+    {% endif %}
+  {% endfor %}
+</nav>

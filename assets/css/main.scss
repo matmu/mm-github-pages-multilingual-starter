@@ -1,0 +1,64 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+search: false
+---
+
+@charset "utf-8";
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
+
+/* Make the search button only have left margin (no right gap) */
+.greedy-nav .search__toggle {
+  margin-inline: 0;   /* reset both logical sides (start/end) */
+  margin-right: 0;    /* legacy/explicit: ensure no right gap */
+  margin-left: 1rem;  /* keep a bit of space from the nav links */
+}
+
+/* a bit of spacing so it matches other masthead controls */
+.greedy-nav .lang-mini-dd {
+  margin-right: 1rem;
+  position: relative;    /* why: establishes positioning context */
+}
+
+/* make the summary look like a tiny icon button, no default marker */
+.greedy-nav .lang-mini-dd > summary.lang-trigger {
+  color: inherit;        /* same color as nav text/icons */
+  display: inline-flex;  /* center icon like the search button */
+  align-items: center;
+  line-height: 1;        /* no extra vertical space */
+  padding: 0;            /* no padding so it sits like the search icon */
+  background: none; border: 0; cursor: pointer; /* button-like behavior */
+}
+.greedy-nav .lang-mini-dd > summary.lang-trigger::-webkit-details-marker { display: none; }
+
+/* DIM THE ICON so it’s not brighter than the search icon */
+.greedy-nav .lang-mini-dd > summary.lang-trigger i {
+  font-size: 1em;   /* a touch smaller than text */
+  opacity: .75;       /* reduce brightness to match search icon tone */
+  transition: opacity .2s ease;
+}
+.greedy-nav .lang-mini-dd > summary.lang-trigger:hover i,
+.greedy-nav .lang-mini-dd[open] > summary.lang-trigger i {
+  opacity: 1;         /* brighten on hover/open, like the search icon */
+}
+
+/* position the panel so it doesn't enlarge the header and aligns with the icon */
+.greedy-nav .lang-mini-dd nav[aria-label="Language switch"] {
+  position: absolute;                /* why: takes panel out of document flow */
+  top: 100%;                         /* why: place right below the summary */
+  left: 0;                           /* why: align left edge with the icon */
+  transform: translateY(.25rem);     /* why: tiny offset for breathing room */
+  z-index: 50;                       /* why: ensure it overlays header items */
+  margin: 0;                         /* why: remove default margin on <nav> */
+  padding: 0;                        /* you can add padding later if desired */
+}
+
+/* vertical stack of flags, tight and aligned */
+.greedy-nav .lang-mini-dd nav[aria-label="Language switch"] a,
+.greedy-nav .lang-mini-dd nav[aria-label="Language switch"] span {
+  display: block;                    /* why: one per line (you said vertical is fine) */
+  margin: 0;                         /* why: remove default spacing inconsistencies */
+  padding: .125rem 0;                /* why: small, click-friendly targets */
+  line-height: 1.2;                  /* why: keep rows compact */
+}
