@@ -20,11 +20,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # ensures git history is available for github-metadata
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          # Use your repos .ruby-version if present, or pin here.
           ruby-version: '3.1'
           bundler-cache: true
 
@@ -34,6 +35,8 @@ jobs:
       - name: Build site
         env:
           JEKYLL_ENV: production
+          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAGES_REPO_NWO: matmu/mm-github-pages-polyglot
         run: |
           bundle install --without development test
           bundle exec jekyll build --trace
