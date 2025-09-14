@@ -1,8 +1,5 @@
 {% assign _lang = site.active_lang | default: site.locale | slice: 0,2 | default: site.default_lang | default: "en" %}
 
-<!-- DEBUG {{ _lang }} -->
-<!-- DEBUG {{ site.data.ui-text[_lang].search_label_text }} -->
-
 <div class="search-content__inner-wrap">
   {%- assign search_provider = site.search_provider | default: "lunr" -%}
   {%- case search_provider -%}
