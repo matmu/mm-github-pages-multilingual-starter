@@ -1,4 +1,32 @@
 <!-- begin _includes/seo.html -->
+{%- comment -%} Language + canonical helpers using _data/lang.yml {%- endcomment -%}
+{% assign __lang = site.active_lang | default: site.locale | default: site.default_lang | default: 'en' %}
+{% assign __lang_meta = site.data.lang[__lang] %}
+{% assign __og_locale = __lang_meta.locale | default: __lang | replace: '-', '_' %}
+
+{% assign canonical_path = page.canonical_url | default: page.url | replace: "/index.html", "/" %}
+{% assign canonical_abs  = canonical_path | absolute_url %}
+
+{%- comment -%} Open Graph alternate locales (from _data/lang.yml) {%- endcomment -%}
+{%- for code in site.languages -%}
+  {%- if code != __lang -%}
+    {% assign alt_locale = site.data.lang[code].locale | default: code | replace: '-', '_' %}
+    <meta property="og:locale:alternate" content="{{ alt_locale }}">
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} hreflang alternates for each language + x-default {%- endcomment -%}
+{%- for code in site.languages -%}
+  {%- if code == site.default_lang -%}
+    {% assign alt_href = canonical_abs %}
+  {%- else -%}
+    {% assign alt_href = '/' | append: code | append: canonical_path | absolute_url %}
+  {%- endif -%}
+  <link rel="alternate" hreflang="{{ code }}" href="{{ alt_href }}">
+{%- endfor -%}
+<link rel="alternate" hreflang="x-default" href="{{ canonical_abs }}">
+
+
 {%- assign title_separator = site.title_separator | default: '-' -%}
 
 {%- assign page_title = page.title | default: site.title | replace: '|', '&#124;' -%}
@@ -11,11 +39,20 @@
 {%- assign page_title = page_title | markdownify | strip_html | strip_newlines | escape_once -%}
 {%- assign seo_title  = seo_title  | markdownify | strip_html | strip_newlines | escape_once -%}
 
-{%- assign canonical_url = page.canonical_url | default: page.url | replace: "/index.html", "/" | absolute_url %}
+{%- assign canonical_url = canonical_abs -%}
 
-{%- assign seo_description = page.description | default: page.excerpt | default: site.description -%}
+{%- assign seo_description =
+  page.description[__lang]
+  | default: page.description
+  | default: page.excerpt
+  | default: site.description[__lang]
+  | default: site.description
+-%}
+
 {%- if seo_description -%}
-  {%- assign seo_description = seo_description | markdownify | strip_html | newline_to_br | strip_newlines | replace: '<br />', ' ' | escape_once | strip -%}
+  {%- assign seo_description = seo_description
+    | markdownify | strip_html | newline_to_br | strip_newlines
+    | replace: '<br />', ' ' | escape_once | strip -%}
 {%- endif -%}
 
 {%- assign author = page.author | default: page.authors[0] | default: site.author -%}
@@ -27,7 +64,6 @@
 
 {%- assign page_large_image = page.header.og_image | default: page.header.overlay_image | default: page.header.image | absolute_url | escape -%}
 {%- assign page_teaser_image = page.header.teaser | default: site.og_image | absolute_url | escape -%}
-{%- assign site_og_image = site.og_image | absolute_url | escape -%}
 
 {%- if page.date -%}
   {%- assign og_type = "article" -%}
@@ -35,7 +71,13 @@
   {%- assign og_type = "website" -%}
 {%- endif -%}
 
-<title>{{ seo_title }}{% if paginator %}{% unless paginator.page == 1 %} {{ title_separator }} {{ site.data.ui-text[site.locale].page | default: "Page" }} {{ paginator.page }}{% endunless %}{% endif %}</title>
+<title>
+  {{ seo_title }}{% if paginator %}{% unless paginator.page == 1 %}
+    {{ " " | append: title_separator | append: " " }}
+    {{ site.data.ui-text[__lang].page | default: "Page" }} {{ paginator.page }}
+  {% endunless %}{% endif %}
+</title>
+
 <meta name="description" content="{{ seo_description }}">
 
 {% if author.name %}
@@ -46,7 +88,7 @@
 {% endif %}
 
 <meta property="og:type" content="{{ og_type }}">
-<meta property="og:locale" content="{{ site.locale | replace: "-", "_" | default: "en_US" }}">
+<meta property="og:locale" content="{{ __og_locale }}">
 <meta property="og:site_name" content="{{ site.title | escape_once | strip }}">
 <meta property="og:title" content="{{ page_title }}">
 <meta property="og:url" content="{{ canonical_url }}">
@@ -109,9 +151,24 @@
   <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
 {% endif %}
 
-{% if page.url == '/' %}
+
+<!-- beginn: double check -->
+{%- assign is_lang_home = false -%}
+{%- if canonical_path == '/' -%}
+  {%- assign is_lang_home = true -%}
+{%- else -%}
+  {%- for code in site.languages -%}
+    {%- unless code == site.default_lang -%}
+      {%- if canonical_path == '/' | append: code | append: '/' -%}
+        {%- assign is_lang_home = true -%}
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if is_lang_home -%}
   {% include schema.html %}
-{% endif %}
+{%- endif -%}
+<!-- end: double check -->
 
 {% if site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />

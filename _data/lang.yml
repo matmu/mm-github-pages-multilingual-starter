@@ -1,7 +1,9 @@
 en:
   name: "English"
   icon: 🇺🇸
+  locale: en_US
 
 de:
   name: "Deutsch"
   icon: 🇩🇪
+  locale: de_DE

@@ -1,11 +1,9 @@
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
 
 
-<!-- Get variables -->
 {% assign lang = site.active_lang | default: site.default_lang %}
 {% assign page_url = include.page_url | default: page.permalink | default: page.url %}
-<!-- DEBUG {{ site.data.navigation.main[lang] }} -->
-<!-- DEBUG {{ page_url }} -->
+
 
 <div class="masthead">
   <div class="masthead__inner-wrap">
@@ -20,7 +18,7 @@
         </a>
         <ul class="visible-links">
 
-          <!-- Language-aware navigation items -->
+          <!-- Language-specific navigation items -->
           {%- for link in site.data.navigation.main[lang] -%}
             <li class="masthead__menu-item">
               <a
@@ -43,7 +41,19 @@
           <summary class="lang-trigger" aria-label="Language">
             <i class="fas fa-language" aria-hidden="true"></i>
           </summary>
-          {% include header/lang-switcher.html page_url=page_url %}
+          <nav aria-label="Language switch">
+            {% for lang in site.languages %}
+              {% assign meta  = site.data.lang[lang] %}
+              {% assign name  = meta.name %}
+              {% assign icon  = meta.icon %}
+
+              {% if lang == site.default_lang %}
+                <a href=" {{ site.baseurl }}{{ page_url }}" hreflang="{{ lang }}" title="{{ name }}">{{ icon }}</a>
+              {% else %}
+                <a href="{{ site.baseurl }}/{{ lang }}{{ page_url }}" hreflang="{{ lang }}" title="{{ name }}">{{ icon }}</a>
+              {% endif %}
+            {% endfor %}
+          </nav>
         </details>
 
         <button class="greedy-nav__toggle hidden" type="button">
