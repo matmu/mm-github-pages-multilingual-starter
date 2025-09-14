@@ -1,5 +1,7 @@
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
 
+
+<!-- Get variables -->
 {% assign lang = site.active_lang | default: site.default_lang %}
 {% assign page_url = include.page_url | default: page.permalink | default: page.url %}
 <!-- DEBUG {{ site.data.navigation.main[lang] }} -->
@@ -17,6 +19,8 @@
           {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle | escape_once | strip }}</span>{% endif %}
         </a>
         <ul class="visible-links">
+
+          <!-- Language-aware navigation items -->
           {%- for link in site.data.navigation.main[lang] -%}
             <li class="masthead__menu-item">
               <a
@@ -34,6 +38,7 @@
         </button>
         {% endif %}
 
+        <!-- Language switch -->
         <details class="lang-mini-dd">
           <summary class="lang-trigger" aria-label="Language">
             <i class="fas fa-language" aria-hidden="true"></i>

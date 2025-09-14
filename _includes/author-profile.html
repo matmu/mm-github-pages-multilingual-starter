@@ -22,11 +22,11 @@
         {{ author.bio | markdownify }}
       </div>
     {% endif %}
-  -->
+    -->
 
+    <!-- Language-aware bio -->
     {% assign lang = site.active_lang | default: site.default_lang %}
     {% assign bio  = author.bio[lang] | default: author.bio[site.default_lang] | default: author.bio %}
-
     {% if bio %}
       <div class="author__bio p-note" itemprop="description">
         {{ bio | markdownify }}

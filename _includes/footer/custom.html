@@ -3,9 +3,9 @@
       {% assign lang_name = site.data.lang[lang].name %}
       {% assign lang_icon = site.data.lang[lang].icon %}
       {% if lang == site.default_lang %}
-        <a href=" {{ page.url }}" title="{{ lang_name }}" hreflang="{{ lang }}">{{ lang_icon }}</a>
+        <a href=" {{ site.baseurl }}{{ page.url }}" title="{{ lang_name }}" hreflang="{{ lang }}">{{ lang_icon }}</a>
       {% else %}
-        <a href="/{{ lang }}{{ page.url }}" title="{{ lang_name }}" hreflang="{{ lang }}">{{ lang_icon }}</a>
+        <a href="{{ site.baseurl }}/{{ lang }}{{ page.url }}" title="{{ lang_name }}" hreflang="{{ lang }}">{{ lang_icon }}</a>
       {% endif %}
   {% endfor %}
 </div>

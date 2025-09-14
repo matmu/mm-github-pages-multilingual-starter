@@ -63,7 +63,7 @@ plugins:
   - jekyll-polyglot
 
 
-# Polyglot
+# Multilingual
 languages: ["en","de"]
 default_lang: "en"
 exclude_from_localization: ["assets"]
