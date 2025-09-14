@@ -38,6 +38,14 @@ Push to `master` (or trigger manually under **Actions**) and GitHub will build a
 Polyglot is configured in `_config.yml`:
 
 ```yaml
+description:
+  en: >- # this means to ignore newlines until "baseurl:"
+    Write an awesome description for your new site here. You can edit this
+    line in _config.yml. It will appear in your document head meta (for
+    Google search results) and in your feed.xml site description.
+  de: >-
+    Deutsche Beschreibung
+
 # Polyglot
 languages: ["en", "de"]
 default_lang: "en"
@@ -52,7 +60,7 @@ author:
 
 Supporting files:
 -   `/_data/lang.yml` → Language meta information
--   `/_data/navigation.yml` → Language-aware navigation items
+-   `/_data/navigation.yml` → Language-specific navigation items
 
 ---
 
@@ -61,7 +69,7 @@ To build and preview locally:
 
 ```bash
 bundle install
-bundle exec jekyll serve
+bundle exec jekyll serve --livereload -o --incremental
 ```
 
 Visit [http://localhost:4000](http://localhost:4000) in your browser.
