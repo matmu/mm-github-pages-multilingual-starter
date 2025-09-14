@@ -1,0 +1,48 @@
+{%- assign __lang = include.__lang | default: site.locale | default: site.active_lang | default: 'en' -%}
+{%- assign __lang_bcp = __lang | replace:'_','-' -%}
+
+{%- if __lang == site.default_lang -%}
+  {%- assign __home_path = '/' -%}
+{%- else -%}
+  {%- assign __home_path = '/' | append: __lang | append: '/' -%}
+{%- endif -%}
+{%- assign __canon = __home_path | absolute_url -%}
+{%- assign __search_abs = __canon | append: 'search/' -%}
+{%- assign __og_image_abs = site.og_image | absolute_url | escape -%}
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  {%- assign __entity = site.social.type | default: "Person" -%}
+  {%- if __entity == "Organization" -%}
+    "@type": "Organization",
+    "name": {{ site.social.name | default: site.title | jsonify }},
+    "url": {{ __canon | jsonify }}{% if site.og_image %},
+    "logo": {{ __og_image_abs | jsonify }}{% endif %}{% if site.social.links %},
+    "sameAs": {{ site.social.links | jsonify }}{% endif %}
+  {%- else -%}
+    "@type": "Person",
+    "name": {{ site.author.name | default: site.social.name | default: site.title | jsonify }},
+    "url": {{ __canon | jsonify }}{% if site.social.links %},
+    "sameAs": {{ site.social.links | jsonify }}{% endif %}
+  {%- endif -%}
+}
+</script>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "{{ __canon }}#website",
+  "url": "{{ __canon }}",
+  "name": {{ site.title | jsonify }},
+  "inLanguage": "{{ __lang_bcp }}"{% if site.search %},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ __search_abs }}?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }{% endif %}
+}
+</script>
