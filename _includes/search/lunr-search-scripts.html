@@ -1,0 +1,17 @@
+{%- assign active = page.lang | default: site.active_lang | default: site.lang | default: site.locale | slice: 0,2 -%}
+
+{%- case active -%}
+  {%- when "gr" -%}{% assign lunr_lang = "gr" %}
+  {%- else -%}{% assign lunr_lang = "en" %}
+{%- endcase -%}
+
+{%- assign lang_prefix = '' -%}
+{%- if site.polyglot and site.polyglot.include_default_lang == true -%}
+  {%- assign lang_prefix = '/' | append: active -%}
+{%- elsif active != site.default_lang -%}
+  {%- assign lang_prefix = '/' | append: active -%}
+{%- endif -%}
+
+<script src="{{ '/assets/js/lunr/lunr.min.js' | relative_url }}"></script>
+<script src="{{ lang_prefix | append: '/assets/js/lunr/lunr-store.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/lunr/lunr-' | append: lunr_lang | append: '.js' | relative_url }}"></script>

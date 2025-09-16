@@ -74,7 +74,10 @@ plugins:
 languages: ["en","de"]
 default_lang: "de"
 locale: "de"
-exclude_from_localization: ["assets"]
+exclude_from_localization:
+  - "assets/images"
+  - "assets/fonts"
+  - "assets/css"
 parallel_localization: true
 
 sass:
