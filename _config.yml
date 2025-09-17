@@ -144,3 +144,21 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+
+# Giscus
+# Instructions: https://giscus.app/
+# Variables are usied in _includes/comments-providers/giscus.html
+# comments:
+#   provider: giscus
+#   giscus:
+#     repo:
+#     repo_id:
+#     category_name:
+#     category_id:
+#     reactions_enabled:
+#     theme:
+#     strict: "1"
+#     emit_metadata: "0"
+#     input_position: "top"
+#     lang: "en"
