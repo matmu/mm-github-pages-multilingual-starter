@@ -25,7 +25,13 @@
     -->
 
     <!-- Language-aware bio -->
-    {% assign lang = site.active_lang | default: site.default_lang %}
+    {%- assign lang = include.lang
+      | default: page.lang
+      | default: site.active_lang
+      | default: site.default_lang
+      | default: site.locale
+      | default: 'en'
+      | downcase | replace:'_','-' | split:'-' | first -%}
     {% assign bio  = author.bio[lang] | default: author.bio[site.default_lang] | default: author.bio %}
     {% if bio %}
       <div class="author__bio p-note" itemprop="description">

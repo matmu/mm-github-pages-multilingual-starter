@@ -1,9 +1,13 @@
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
 
-
-{% assign lang = site.active_lang | default: site.default_lang %}
+{%- assign lang = include.lang
+  | default: page.lang
+  | default: site.active_lang
+  | default: site.default_lang
+  | default: site.locale
+  | default: 'en'
+  | downcase | replace:'_','-' | split:'-' | first -%}
 {% assign page_url = include.page_url | default: page.permalink | default: page.url %}
-
 
 <div class="masthead">
   <div class="masthead__inner-wrap">
@@ -17,7 +21,6 @@
           {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle | escape_once | strip }}</span>{% endif %}
         </a>
         <ul class="visible-links">
-
           <!-- Language-specific navigation items -->
           {%- for link in site.data.navigation.main[lang] -%}
             <li class="masthead__menu-item">
@@ -29,9 +32,10 @@
             </li>
           {%- endfor -%}
         </ul>
+
         {% if site.search == true %}
         <button class="search__toggle" type="button">
-          <span class="visually-hidden">{{ site.data.ui-text[site.locale].search_label | default: "Toggle search" }}</span>
+          <span class="visually-hidden">{{ site.data.ui-text[lang].search_label | default: "Toggle search" }}</span>
           <i class="fas fa-search"></i>
         </button>
         {% endif %}
@@ -57,7 +61,7 @@
         </details>
 
         <button class="greedy-nav__toggle hidden" type="button">
-          <span class="visually-hidden">{{ site.data.ui-text[site.locale].menu_label | default: "Toggle menu" }}</span>
+          <span class="visually-hidden">{{ site.data.ui-text[lang].menu_label | default: "Toggle menu" }}</span>
           <div class="navicon"></div>
         </button>
         <ul class="hidden-links hidden"></ul>
