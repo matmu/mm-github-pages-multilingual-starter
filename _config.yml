@@ -29,7 +29,7 @@ minimal_mistakes_skin: default
 search: true
 
 repository: matmu/mm-github-pages-multilingual-starter
-url: "https://matmu.github.io"
+url: ""
 baseurl: "/mm-github-pages-multilingual-starter"
 
 # Build settings
@@ -75,6 +75,7 @@ languages: ["en","de"]
 default_lang: "de"
 locale: "de"
 exclude_from_localization:
+  - "404.md"
   - "assets/images"
   - "assets/fonts"
   - "assets/css"
