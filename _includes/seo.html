@@ -1,6 +1,6 @@
 <!-- begin _includes/seo.html -->
 {%- assign __lang = site.active_lang | default: site.locale | default: site.default_lang | default: 'en' -%}
-{%- assign __path = page.url | replace: '/index.html','/' -%}
+{%- assign __path = page.url | replace: '/index.html', '/' -%}
 {%- if __lang == site.default_lang -%}
   {%- assign canonical_path = __path -%}
 {%- else -%}
@@ -8,6 +8,7 @@
 {%- endif -%}
 {%- assign canonical_abs = canonical_path | absolute_url -%}
 {%- assign canonical_url = canonical_abs -%}
+{%- assign default_canonical_abs = __path | absolute_url -%}
 
 {% assign __lang_meta = site.data.lang[__lang] %}
 {% assign __og_locale = __lang_meta.locale | default: __lang | replace: '-', '_' %}
@@ -23,13 +24,13 @@
 
 {%- for code in site.languages -%}
   {%- if code == site.default_lang -%}
-    {% assign alt_href = canonical_abs %}
+    {% assign alt_href = default_canonical_abs %}
   {%- else -%}
-    {% assign alt_href = '/' | append: code | append: canonical_path | absolute_url %}
+    {% assign alt_href = '/' | append: code | append: __path | absolute_url %}
   {%- endif -%}
   <link rel="alternate" hreflang="{{ code }}" href="{{ alt_href }}">
 {%- endfor -%}
-<link rel="alternate" hreflang="x-default" href="{{ canonical_abs }}">
+<link rel="alternate" hreflang="x-default" href=" {{ default_canonical_abs }}">
 
 
 {%- assign title_separator = site.title_separator | default: '-' -%}

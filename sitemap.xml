@@ -1,0 +1,54 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
+
+
+{%- assign lang = page.lang
+  | default: site.active_lang
+  | default: site.default_lang
+  | default: site.locale
+  | default: 'en'
+  | downcase | replace:'_','-' | split:'-' | first -%}
+
+{%- assign lang_prefix = '' -%}
+{%- if site.polyglot and site.polyglot.include_default_lang == true -%}
+  {%- assign lang_prefix = '/' | append: lang -%}
+{%- elsif lang != site.default_lang -%}
+  {%- assign lang_prefix = '/' | append: lang -%}
+{%- endif -%}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  {%- for p in site.pages -%}
+    {%- capture u %}{{ p.url }}{% endcapture -%}
+    {%- unless p.sitemap == false
+            or u == '/404.html'
+            or u contains '/sitemap.xml'
+            or u contains '/assets/' -%}
+    <url>
+      <loc>{{ lang_prefix | append: u | absolute_url }}</loc>
+      {%- assign lm = p.last_modified_at | default: p.date -%}
+      {%- if lm -%}<lastmod>{{ lm | date_to_xmlschema }}</lastmod>{%- endif -%}
+    </url>
+    {%- endunless -%}
+  {%- endfor -%}
+
+  {%- for post in site.posts -%}
+  <url>
+    <loc>{{ lang_prefix | append: post.url | absolute_url }}</loc>
+    {%- assign lm = post.last_modified_at | default: post.date -%}
+    {%- if lm -%}<lastmod>{{ lm | date_to_xmlschema }}</lastmod>{%- endif -%}
+  </url>
+  {%- endfor -%}
+
+  {%- assign pdfs = site.static_files | where: "extname", ".pdf" -%}
+   {%- for f in pdfs -%}
+     <url>
+       <loc>{{ f.path | absolute_url }}</loc>
+       {%- if f.modified_time -%}<lastmod>{{ f.modified_time | date_to_xmlschema }}</lastmod>{%- endif -%}
+     </url>
+   {%- endfor -%}
+
+</urlset>
