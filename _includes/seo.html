@@ -14,23 +14,7 @@
 {% assign __og_locale = __lang_meta.locale | default: __lang | replace: '-', '_' %}
 
 
-{%- for code in site.languages -%}
-  {%- if code != __lang -%}
-    {% assign alt_locale = site.data.lang[code].locale | default: code | replace: '-', '_' %}
-    <meta property="og:locale:alternate" content="{{ alt_locale }}">
-  {%- endif -%}
-{%- endfor -%}
-
-
-{%- for code in site.languages -%}
-  {%- if code == site.default_lang -%}
-    {% assign alt_href = default_canonical_abs %}
-  {%- else -%}
-    {% assign alt_href = '/' | append: code | append: __path | absolute_url %}
-  {%- endif -%}
-  <link rel="alternate" hreflang="{{ code }}" href="{{ alt_href }}">
-{%- endfor -%}
-<link rel="alternate" hreflang="x-default" href=" {{ default_canonical_abs }}">
+{% I18n_Headers %}
 
 
 {%- assign title_separator = site.title_separator | default: '-' -%}
@@ -93,6 +77,12 @@
 
 <meta property="og:type" content="{{ og_type }}">
 <meta property="og:locale" content="{{ __og_locale }}">
+{%- for code in site.languages -%}
+  {%- if code != __lang -%}
+    {% assign alt_locale = site.data.lang[code].locale | default: code | replace: '-', '_' %}
+    <meta property="og:locale:alternate" content="{{ alt_locale }}">
+  {%- endif -%}
+{%- endfor -%}
 <meta property="og:site_name" content="{{ site.title | escape_once | strip }}">
 <meta property="og:title" content="{{ page_title }}">
 <meta property="og:url" content="{{ canonical_url }}">
@@ -146,7 +136,6 @@
   {% endif %}
 {% endif %}
 
-<link rel="canonical" href="{{ canonical_url }}">
 
 {% if paginator.previous_page %}
   <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}">

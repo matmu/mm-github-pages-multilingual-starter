@@ -11,8 +11,8 @@ group :jekyll_plugins do
   gem "jekyll-gist"
   gem "jekyll-feed"
   gem "jemoji"
-  gem "jekyll-algolia"      # falls du Algolia nutzt
-  gem "jekyll-polyglot", "~> 1.10"
+  gem "jekyll-algolia"
+  gem "jekyll-polyglot", "~> 1.11"
 end
 
 # Optional
