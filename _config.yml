@@ -28,9 +28,9 @@ github_username: username
 minimal_mistakes_skin: default
 search: true
 
-repository: matmu/mm-github-pages-multilingual-starter
-url: ""
-baseurl: "/mm-github-pages-multilingual-starter"
+repository: matmu/minimal-mistakes-github-actions-multilingual-starter
+url: "https://matmu.github.io"
+baseurl: "/minimal-mistakes-github-actions-multilingual-starter"
 
 # Build settings
 markdown: kramdown
