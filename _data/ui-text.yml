@@ -50,11 +50,6 @@ en: &DEFAULT_EN
   search_algolia_no_results  : "No results"
   results_found              : "Result(s) found"
   back_to_top                : "Back to top"
-  terms_privacy_title        : "Terms & Privacy"
-  terms_privacy_info         : "This site uses cookies and third-party scripts only after your consent."
-  terms_privacy_accept       : "Accept"
-  terms_privacy_ref          : "More Info"
-  terms_privacy_reset        : "Cookie Settings"
   page_not_found_title       : "404 - Page not found"
   page_not_found_info        : "The page you requested does not exist or has moved."
 en-US:
@@ -536,11 +531,6 @@ de: &DEFAULT_DE
   search_algolia_no_results  : "Keine Ergebnisse"
   results_found              : "Ergebnis(se) gefunden"
   back_to_top                : "Zurück nach oben"
-  terms_privacy_title        : "Nutzungsbedingungen & Datenschutz"
-  terms_privacy_info         : "Diese Website verwendet Cookies bzw. Drittanbieter-Skripte erst nach deiner Zustimmung."
-  terms_privacy_accept       : "Zustimmen"
-  terms_privacy_ref          : "Mehr Info"
-  terms_privacy_reset        : "Cookie-Einstellungen"
   page_not_found_title       : "404 - Seite nicht gefunden"
   page_not_found_info        : "Die angeforderte Seite existiert nicht oder wurde verschoben."
 de-DE:
