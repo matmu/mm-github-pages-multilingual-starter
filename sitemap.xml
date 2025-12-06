@@ -43,6 +43,8 @@ permalink: /sitemap.xml
   </url>
   {%- endfor -%}
 
+
+{%- if lang == site.default_lang -%}
   {%- assign pdfs = site.static_files | where: "extname", ".pdf" -%}
    {%- for f in pdfs -%}
      <url>
@@ -50,5 +52,6 @@ permalink: /sitemap.xml
        {%- if f.modified_time -%}<lastmod>{{ f.modified_time | date_to_xmlschema }}</lastmod>{%- endif -%}
      </url>
    {%- endfor -%}
+{%- endif -%}
 
 </urlset>
