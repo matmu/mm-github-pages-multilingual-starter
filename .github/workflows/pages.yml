@@ -36,7 +36,6 @@ jobs:
         env:
           JEKYLL_ENV: production
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PAGES_REPO_NWO: matmu/mm-github-pages-polyglot
         run: |
           bundle install --without development test
           bundle exec jekyll build --trace
