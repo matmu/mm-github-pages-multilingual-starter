@@ -14,6 +14,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
+url: https://matmu.github.io
+baseurl: "minimal-mistakes-github-actions-multilingual-starter"
+
 title: MM
 email:
 description:
