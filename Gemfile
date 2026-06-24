@@ -6,6 +6,8 @@ gem "jekyll-include-cache", "~> 0.2"
 gem "webrick", "~> 1.8"
 gem "faraday-retry", "~> 2.2"
 
+gem "sass-embedded", "~> 1.77", "< 1.93"
+
 group :jekyll_plugins do
   gem "jekyll-paginate"
   gem "jekyll-gist"
